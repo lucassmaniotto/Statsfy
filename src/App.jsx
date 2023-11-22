@@ -1,8 +1,9 @@
-function App() {
+import Routes from "./routes";
 
+function App() {
   return (
     <main>
-      <h1>Statsfy</h1>
+      <Routes />
     </main>
   );
 }
