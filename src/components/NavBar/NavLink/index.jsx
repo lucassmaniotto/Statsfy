@@ -4,12 +4,14 @@ import { green } from "../../GlobalStyles/UI/variables";
 
 const StyledLink = styled(Link)`
   font-weight: 600;
-  transition: 0.2s;
+  transition: 0.3s;
   margin-left: 10px;
-  color: ${(props) => (props.isActive ? green : "inherit")};
+  border-bottom: ${(props) => (props.active ? `1px solid ${green}` : undefined)};
+  color: ${(props) => (props.active ? green : "inherit")};
 
   &:hover {
     color: ${green};
+    border-bottom: 2px solid ${green};
   }
 `;
 
@@ -17,7 +19,7 @@ export const NavLink = ({ to, target = "_self", children }) => {
   const location = useLocation();
 
   return (
-    <StyledLink to={to} target={target} isActive={to === location.pathname}>
+    <StyledLink to={to} target={target} active={to === location.pathname ? 1 : 0}>
       {children}
     </StyledLink>
   );

@@ -1,9 +1,4 @@
 import styled from "styled-components";
-import {
-  black,
-  green,
-  white,
-} from "../../components/GlobalStyles/UI/variables";
 
 export const Container = styled.section`
   display: flex;
@@ -31,26 +26,6 @@ export const ProfileImage = styled.img`
   @media (max-width: 768px) {
     width: 200px;
     height: 200px;
-  }
-`;
-
-export const ButtonLogout = styled.button`
-  width: 200px;
-  margin-top: 20px;
-  padding: 15px 0px;
-  text-align: center;
-  background-color: ${white};
-  border-radius: 50px;
-  color: ${black};
-  font-weight: 600;
-  text-decoration: none;
-  transition: 0.2s;
-  justify-self: flex-end;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${green};
-    color: ${white};
   }
 `;
 

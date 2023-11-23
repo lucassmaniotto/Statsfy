@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { black, white } from "./UI/variables"
+import { black, white } from "./UI/variables";
 
 import CircularStdBlack from "./fonts/CircularStd-Black.otf";
 import CircularStdBlackItalic from "./fonts/CircularStd-BlackItalic.otf";

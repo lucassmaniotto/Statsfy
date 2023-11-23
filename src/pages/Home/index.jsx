@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { NavBar } from "../../components/NavBar";
 import apiClient from "../../services/spotify/login";
-import { ButtonLogout, Container, Content, HeaderCard, ProfileImage } from "./styles";
+import {
+  Container,
+  Content,
+  HeaderCard,
+  ProfileImage,
+} from "./styles";
+import { Button } from "../../components/Button";
 
 export const Home = () => {
-  const location = useLocation();
   const [images, setImages] = useState();
   const [name, setName] = useState();
   const [profile, setProfile] = useState();
@@ -47,8 +52,8 @@ export const Home = () => {
               </div>
             </div>
           </HeaderCard>
-          <NavBar profile={profile} activeLink={location.pathname} />
-          <ButtonLogout onClick={() => handleLogout()}>Logout</ButtonLogout>
+          <NavBar profile={profile} />
+          <Button onClick={() => handleLogout()} $justifySelf="flex-end">Logout</Button>
         </Content>
       </Container>
       <Outlet />
