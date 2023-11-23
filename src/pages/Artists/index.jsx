@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../../services/spotify/login";
+import { Button } from "../../components/Button";
+
 import styled from "styled-components";
 
 const Container = styled.section`
@@ -27,14 +29,44 @@ const Container = styled.section`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0px;
+  gap: 20px;
+`;
+
 export const Artists = () => {
-  const [artists, setArtists] = useState([]);  
+  const [artists, setArtists] = useState([]);
+  const [after, setAfter] = useState(null);
+  const [previousPages, setPreviousPages] = useState([]);
+
+  const fetchArtists = (afterParam) => {
+    const limit = 18;
+    apiClient
+      .get(`/me/following?type=artist&limit=${limit}${afterParam ? `&after=${afterParam}` : ""}`)
+      .then((response) => {
+        setPreviousPages((prevPages) => [...prevPages, artists.slice()]);
+        setArtists(response.data.artists.items);
+        setAfter(response.data.artists.cursors.after);
+      });
+  };
 
   useEffect(() => {
-    apiClient.get("/me/following?type=artist&limit=18").then((response) => {
-      setArtists(response.data.artists.items);
-    });
+    fetchArtists();
   }, []);
+
+  const handleNextPage = () => {
+    fetchArtists(after);
+  };
+
+  const handlePreviousPage = () => {
+    const previousPage = previousPages.pop();
+    if (previousPage) {
+      setArtists(previousPage);
+    }
+  };
 
   return (
     <div>
@@ -48,6 +80,10 @@ export const Artists = () => {
           </div>
         ))}
       </Container>
+      <ButtonContainer>
+        <Button onClick={handlePreviousPage}>Previous Page</Button>
+        <Button onClick={handleNextPage}>Next Page</Button>
+      </ButtonContainer>
     </div>
   );
 };
