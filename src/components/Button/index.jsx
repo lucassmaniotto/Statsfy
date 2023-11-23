@@ -19,6 +19,12 @@ const StyledButton = styled.button`
     background-color: ${green};
     color: ${white};
   }
+
+  &:disabled {
+    background-color: ${white};
+    color: ${black};
+    cursor: not-allowed;
+  }
 `;
 
 export const Button = ({ children, onClick, $justifySelf }) => {
