@@ -5,13 +5,13 @@ import {
   white,
 } from "../../components/GlobalStyles/UI/variables";
 
-export const Container = styled.div`
+export const Container = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   width: 100%;
+  height: 50vh;
 `;
 
 export const Content = styled.div`
@@ -74,15 +74,4 @@ export const HeaderCard = styled.div`
     justify-content: flex-start;
     gap: 10px;
   }
-`;
-
-export const ContentCard = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 20px;
-  margin: 20px;
-
-  
 `;
