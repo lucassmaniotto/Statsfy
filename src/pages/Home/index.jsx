@@ -9,6 +9,7 @@ import {
   ProfileImage,
 } from "./styles";
 import { Button } from "../../components/Button";
+import { Footer } from "../../components/Footer";
 
 export const Home = () => {
   const [images, setImages] = useState();
@@ -57,6 +58,7 @@ export const Home = () => {
         </Content>
       </Container>
       <Outlet />
+      <Footer />
     </>
   );
 };

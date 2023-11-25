@@ -19,7 +19,6 @@ export default function AppRouter() {
       if (!storedToken && hash) {
         const _token = hash.split("&")[0].split("=")[1];
         const expiresIn = hash.split("&")[2].split("=")[1];
-        console.log(expiresIn);
         const expirationTime = Date.now() + expiresIn * 1000;
         window.localStorage.setItem("token", _token);
         window.localStorage.setItem("tokenExpiration", expirationTime);

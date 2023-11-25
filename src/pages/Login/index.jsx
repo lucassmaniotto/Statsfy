@@ -1,4 +1,7 @@
 import { loginEndpoint } from "../../services/spotify/login.js";
+
+import { Footer } from "../../components/Footer";
+
 import { About, Container, Image, LoginButton, Logo, Title } from "./styles.js";
 
 export const Login = () => {
@@ -25,6 +28,7 @@ export const Login = () => {
         </div>
       </About>
       <LoginButton href={loginEndpoint}>Login with Spotify</LoginButton>
+      <Footer />
     </Container>
   );
 };
