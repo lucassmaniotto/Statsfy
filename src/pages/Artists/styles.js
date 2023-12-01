@@ -69,6 +69,16 @@ const ArtistsContainer = styled.div`
     border-radius: 15px;
   }
 
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    width: 200px;
+  }
+
   @media (max-width: 1810px) {
     grid-template-columns: repeat(5, 1fr);
   }
@@ -83,6 +93,12 @@ const ArtistsContainer = styled.div`
 
   @media (max-width: 935px) {
     grid-template-columns: repeat(2, 1fr);
+
+    h3 {
+      white-space: pre-wrap;
+      text-align: center;
+      width: 90%;
+    }
   }
 
   @media (max-width: 630px) {
