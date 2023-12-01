@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { NavBar } from "../../components/NavBar";
 import apiClient from "../../services/spotify/login";
-import {
-  Container,
-  Content,
-  HeaderCard,
-  ProfileImage,
-} from "./styles";
+import { Container, Content, HeaderCard, ProfileImage } from "./styles";
 import { Button } from "../../components/Button";
 import { Footer } from "../../components/Footer";
 
@@ -53,8 +48,12 @@ export const Home = () => {
               </div>
             </div>
           </HeaderCard>
-          <NavBar profile={profile} />
-          <Button onClick={() => handleLogout()} $justifySelf="flex-end">Logout</Button>
+          <div className="nav">
+            <NavBar profile={profile} />
+            <Button onClick={() => handleLogout()} $justifySelf="flex-end">
+              Logout
+            </Button>
+          </div>
         </Content>
       </Container>
       <Outlet />

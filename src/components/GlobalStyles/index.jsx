@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { black, white } from "./UI/variables";
+import { black, green, white } from "./UI/variables";
 
 import CircularStdBlack from "./fonts/CircularStd-Black.otf";
 import CircularStdBlackItalic from "./fonts/CircularStd-BlackItalic.otf";
@@ -234,6 +234,24 @@ const GlobalStyles = createGlobalStyle`
     [hidden] {
         display: none;
     }
+
+    ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px ${black};
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${white};
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${green};
+  }
 `;
 
 export default GlobalStyles;

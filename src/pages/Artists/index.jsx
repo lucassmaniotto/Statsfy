@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import apiClient from "../../services/spotify/login";
 import { Button } from "../../components/Button";
-import { ArtistsContainer, ArtistsInfo, ButtonContainer } from "./styles";
+import {
+  ArtistsContainer,
+  ArtistsInfo,
+  ButtonContainer,
+  Section,
+} from "./styles";
 
 export const Artists = () => {
   const [artists, setArtists] = useState([]);
   const [after, setAfter] = useState(null);
   const [before, setBefore] = useState(null);
+  const [limit, setLimit] = useState(18);
 
   const fetchArtists = (afterParam) => {
-    const limit = 18;
     apiClient
       .get(
         `/me/following?type=artist&limit=${limit}${
@@ -25,10 +30,30 @@ export const Artists = () => {
 
   useEffect(() => {
     fetchArtists();
-  }, []);
+    updateLimitBasedOnScreenWidth();
+    window.addEventListener("resize", updateLimitBasedOnScreenWidth);
+
+    return () => {
+      window.removeEventListener("resize", updateLimitBasedOnScreenWidth);
+    };
+  }, [limit]);
+
+  const updateLimitBasedOnScreenWidth = () => {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth > 1250 && screenWidth <= 1810) {
+      setLimit(20);
+    } else {
+      setLimit(18);
+    }
+  };
 
   const handleNextPage = () => {
     fetchArtists(after);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const handlePreviousPage = () => {
@@ -45,8 +70,20 @@ export const Artists = () => {
     }
   };
 
+  const formatGenres = (genres) => {
+    if (genres.length === 1) {
+      return genres[0];
+    } else if (genres.length === 2) {
+      return genres.join(" & ");
+    } else if (genres.length > 2) {
+      return genres.slice(0, 2).join(", ") + ` & ${genres.length - 2} more`;
+    } else {
+      return "non specified";
+    }
+  };
+
   return (
-    <div>
+    <Section>
       <ArtistsContainer>
         {artists.map((artist) => (
           <div key={artist.id}>
@@ -58,20 +95,18 @@ export const Artists = () => {
               <img src={artist.images[1].url} alt={artist.name} />
               <h3>{artist.name}</h3>
             </a>
-              <ArtistsInfo>
-                <p>Genre: {artist.genres[0] || "non specified"}</p>
-                <p>{formatFollowers(artist.followers.total)}</p>
-                <p>{artist.popularity}% of popularity</p>
-              </ArtistsInfo>
+            <ArtistsInfo>
+              <p className="genres">Genre: {formatGenres(artist.genres)}</p>
+              <p>{formatFollowers(artist.followers.total)}</p>
+              <p>{artist.popularity}% of popularity</p>
+            </ArtistsInfo>
           </div>
         ))}
       </ArtistsContainer>
       <ButtonContainer>
-        <Button onClick={handlePreviousPage}>
-          Initial Page
-        </Button>
+        <Button onClick={handlePreviousPage}>Previous Page</Button>
         <Button onClick={handleNextPage}>Next Page</Button>
       </ButtonContainer>
-    </div>
+    </Section>
   );
 };
