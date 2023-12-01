@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import apiClient from "../../services/spotify/login";
 import { Button } from "../../components/Button";
 import {
+  ArtistsCard,
   ArtistsContainer,
   ArtistsInfo,
   ButtonContainer,
@@ -28,16 +29,6 @@ export const Artists = () => {
       });
   };
 
-  useEffect(() => {
-    fetchArtists();
-    updateLimitBasedOnScreenWidth();
-    window.addEventListener("resize", updateLimitBasedOnScreenWidth);
-
-    return () => {
-      window.removeEventListener("resize", updateLimitBasedOnScreenWidth);
-    };
-  }, [limit]);
-
   const updateLimitBasedOnScreenWidth = () => {
     const screenWidth = window.innerWidth;
 
@@ -47,6 +38,16 @@ export const Artists = () => {
       setLimit(18);
     }
   };
+
+  useEffect(() => {
+    fetchArtists();
+    updateLimitBasedOnScreenWidth();
+    window.addEventListener("resize", updateLimitBasedOnScreenWidth);
+
+    return () => {
+      window.removeEventListener("resize", updateLimitBasedOnScreenWidth);
+    };
+  }, [limit]);
 
   const handleNextPage = () => {
     fetchArtists(after);
@@ -86,21 +87,20 @@ export const Artists = () => {
     <Section>
       <ArtistsContainer>
         {artists.map((artist) => (
-          <div key={artist.id}>
-            <a
-              href={artist.external_urls.spotify}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img src={artist.images[1].url} alt={artist.name} />
-              <h3>{artist.name}</h3>
-            </a>
+          <ArtistsCard 
+            key={artist.id}
+            href={artist.external_urls.spotify}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={artist.images[1].url} alt={artist.name} />
+            <h3>{artist.name}</h3>
             <ArtistsInfo>
               <p className="genres">Genre: {formatGenres(artist.genres)}</p>
               <p>{formatFollowers(artist.followers.total)}</p>
               <p>{artist.popularity}% of popularity</p>
             </ArtistsInfo>
-          </div>
+          </ArtistsCard>
         ))}
       </ArtistsContainer>
       <ButtonContainer>

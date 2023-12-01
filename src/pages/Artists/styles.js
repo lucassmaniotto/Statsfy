@@ -38,7 +38,7 @@ const ArtistsContainer = styled.div`
   margin: 40px 0px;
   justify-items: center;
   align-items: center;
-  text-align: center;
+  text-align: left;
   font-size: 1.2rem;
   font-weight: 600;
   color: #fff;
@@ -47,36 +47,8 @@ const ArtistsContainer = styled.div`
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    margin-bottom: 10px;
+    margin: 15px 0;
     object-fit: cover;
-  }
-
-  h3 {
-    margin: 10px 0;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #fff;
-  }
-
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: linear-gradient(90deg, #1f1f1f, #2d2d2d);
-    padding-top: 20px;
-    border-radius: 15px;
-  }
-
-  a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    text-decoration: none;
-    width: 200px;
   }
 
   @media (max-width: 1810px) {
@@ -93,16 +65,40 @@ const ArtistsContainer = styled.div`
 
   @media (max-width: 935px) {
     grid-template-columns: repeat(2, 1fr);
-
-    h3 {
-      white-space: pre-wrap;
-      text-align: center;
-      width: 90%;
-    }
   }
 
   @media (max-width: 630px) {
     grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
+const ArtistsCard = styled.a`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #1f1f1f, #2d2d2d);
+  border-radius: 15px;
+  max-width: 270px;
+
+  h3 {
+    margin: 10px 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 50px;
+    width: 260px;
+    text-align: center;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    transition: all 0.25s ease-in-out;
   }
 `;
 
@@ -137,4 +133,4 @@ const ButtonContainer = styled.div`
   gap: 20px;
 `;
 
-export { Section, ArtistsContainer, ButtonContainer, ArtistsInfo };
+export { Section, ArtistsContainer, ArtistsCard, ArtistsInfo, ButtonContainer };
