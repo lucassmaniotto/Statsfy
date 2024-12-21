@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
 import { Artists } from "./pages/Artists";
+import { Artist } from "./pages/Artists/Artist";
 import { Stats } from "./pages/Stats";
 import { Playlists } from "./pages/Playlists";
 
@@ -53,6 +54,7 @@ export default function AppRouter() {
             <Route index element={<Stats />} />
             <Route path="/playlists" element={<Playlists />} />
             <Route path="/artists" element={<Artists />} />
+            <Route path="/artists/:artistId" element={<Artist />} />
           </Route>
         </Routes>
       </BrowserRouter>

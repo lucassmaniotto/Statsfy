@@ -1,35 +1,5 @@
 import styled from "styled-components";
-
-const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-
-  @media (max-width: 830px) {
-    padding: 0;
-    border-radius: 0;
-    width: 100%;
-    padding: 0px;
-    font-size: 0.8rem;
-
-    .nav {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-evenly;
-      width: 100%;
-      padding-bottom: 20px;
-    }
-
-    button {
-      padding: 15px;
-      margin-top: 10px;
-      width: 150px;
-    }
-  }
-`;
+import { Link } from "react-router-dom";
 
 const ArtistsContainer = styled.div`
   display: grid;
@@ -72,7 +42,7 @@ const ArtistsContainer = styled.div`
   }
 `;
 
-const ArtistsCard = styled.a`
+const ArtistsCard = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,6 +69,7 @@ const ArtistsCard = styled.a`
   &:hover {
     transform: scale(1.05);
     transition: all 0.25s ease-in-out;
+    cursor: pointer;
   }
 `;
 
@@ -133,4 +104,4 @@ const ButtonContainer = styled.div`
   gap: 20px;
 `;
 
-export { Section, ArtistsContainer, ArtistsCard, ArtistsInfo, ButtonContainer };
+export { ArtistsContainer, ArtistsCard, ArtistsInfo, ButtonContainer };

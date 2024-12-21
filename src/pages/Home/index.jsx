@@ -21,7 +21,7 @@ export const Home = () => {
 
   useEffect(() => {
     apiClient.get("/me").then((response) => {
-      setImages(response.data.images[1].url);
+      setImages(response.data.images[0].url);
       setName(response.data.display_name);
       setProfile(response.data.external_urls.spotify);
       setFollowers(response.data.followers.total);

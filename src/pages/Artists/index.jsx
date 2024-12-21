@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import apiClient from "../../services/spotify/login";
 import { Button } from "../../components/Button";
+
 import {
   ArtistsCard,
   ArtistsContainer,
   ArtistsInfo,
   ButtonContainer,
-  Section,
 } from "./styles";
+
+import { Section } from "../../components/GlobalStyles/shared";
+import { formatFollowers } from "../../components/util/formatFollowers";
+import { formatGenres } from "../../components/util/formatGenres";
 
 export const Artists = () => {
   const [artists, setArtists] = useState([]);
@@ -85,38 +89,11 @@ export const Artists = () => {
     });
   };
 
-  const formatFollowers = (followers) => {
-    if (followers < 1000) {
-      return `${followers} Followers`;
-    } else if (followers < 1000000) {
-      return `${(followers / 1000).toFixed(1)}K Followers`;
-    } else {
-      return `${(followers / 1000000).toFixed(1)}M Followers`;
-    }
-  };
-
-  const formatGenres = (genres) => {
-    if (genres.length === 1) {
-      return genres[0];
-    } else if (genres.length === 2) {
-      return genres.join(" & ");
-    } else if (genres.length > 2) {
-      return genres.slice(0, 2).join(", ") + ` & ${genres.length - 2} more`;
-    } else {
-      return "non specified";
-    }
-  };
-
   return (
     <Section>
       <ArtistsContainer>
         {artists.map((artist) => (
-          <ArtistsCard
-            key={artist.id}
-            href={artist.external_urls.spotify}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <ArtistsCard key={artist.id} to={`/artists/${artist.id}`}>
             <img src={artist.images[1].url} alt={artist.name} />
             <h3>{artist.name}</h3>
             <ArtistsInfo>
