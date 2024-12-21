@@ -1,3 +1,3 @@
 export const white = "#fff";
-export const green = "#1db954";
-export const black = "#191414";
+export const green = "#1ed760";
+export const black = "#121212";

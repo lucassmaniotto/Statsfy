@@ -12,10 +12,11 @@ import {
 export const Artists = () => {
   const [artists, setArtists] = useState([]);
   const [after, setAfter] = useState(null);
-  const [before, setBefore] = useState(null);
   const [limit, setLimit] = useState(18);
+  const [pageHistory, setPageHistory] = useState([]);
+  const [currentPageIndex, setCurrentPageIndex] = useState(-1);
 
-  const fetchArtists = (afterParam) => {
+  const fetchArtists = (afterParam = null) => {
     apiClient
       .get(
         `/me/following?type=artist&limit=${limit}${
@@ -24,8 +25,18 @@ export const Artists = () => {
       )
       .then((response) => {
         setArtists(response.data.artists.items);
-        setAfter(response.data.artists.cursors.after);
-        setBefore(response.data.artists.cursors.before);
+        setAfter(response.data.artists.cursors?.after || null);
+
+        if (afterParam !== null || currentPageIndex === -1) {
+          setPageHistory((prevHistory) => [
+            ...prevHistory.slice(0, currentPageIndex + 1),
+            {
+              artists: response.data.artists.items,
+              after: response.data.artists.cursors?.after || null,
+            },
+          ]);
+          setCurrentPageIndex((prevIndex) => prevIndex + 1);
+        }
       });
   };
 
@@ -58,7 +69,20 @@ export const Artists = () => {
   };
 
   const handlePreviousPage = () => {
-    fetchArtists(before);
+    if (currentPageIndex > 0) {
+      const previousPage = pageHistory[currentPageIndex - 1];
+      if (currentPageIndex - 1 === 0) {
+        fetchArtists(null);
+      } else {
+        setArtists(previousPage.artists);
+        setAfter(previousPage.after);
+      }
+      setCurrentPageIndex((prevIndex) => prevIndex - 1);
+    }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const formatFollowers = (followers) => {
@@ -87,7 +111,7 @@ export const Artists = () => {
     <Section>
       <ArtistsContainer>
         {artists.map((artist) => (
-          <ArtistsCard 
+          <ArtistsCard
             key={artist.id}
             href={artist.external_urls.spotify}
             target="_blank"
@@ -104,7 +128,9 @@ export const Artists = () => {
         ))}
       </ArtistsContainer>
       <ButtonContainer>
-        <Button onClick={handlePreviousPage}>Previous Page</Button>
+        <Button onClick={handlePreviousPage} disabled={currentPageIndex <= 0}>
+          Previous Page
+        </Button>
         <Button onClick={handleNextPage}>Next Page</Button>
       </ButtonContainer>
     </Section>

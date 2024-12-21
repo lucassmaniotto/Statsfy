@@ -16,7 +16,7 @@ export const NavBar = ({ profile }) => {
       </NavLink>
       <NavLink to="/">Stats</NavLink>
       <NavLink to="/playlists">Playlists</NavLink>
-      <NavLink to="/artists">Artists</NavLink>
+      <NavLink to="/artists">Followed Artists</NavLink>
     </Nav>
   );
 };
