@@ -6,6 +6,15 @@ const Section = styled.section`
   align-items: center;
   justify-content: center;
   padding: 0 20px;
+  width: 95%;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 2rem;
+    margin: 5rem 0 0 1rem;
+    text-align: left;
+    align-self: flex-start;
+  }
 
   @media (max-width: 830px) {
     padding: 0;

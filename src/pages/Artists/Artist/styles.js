@@ -4,6 +4,8 @@ import { green } from "../../../components/GlobalStyles/UI/variables";
 const ArtistContainer = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
+  justify-content: center;
 
   div {
     display: flex;
@@ -63,8 +65,9 @@ const Albums = styled.div`
   div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    width: 100%;
 
     img {
       width: 100%;
@@ -72,12 +75,61 @@ const Albums = styled.div`
       border-radius: 10px;
       object-fit: cover;
     }
+  }
 
-    p {
-      font-size: 1.1rem;
-      margin: 10px 0;
-    }
+  @media (max-width: 1810px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media (max-width: 1530px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 1250px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 935px) {
+    grid-template-columns: repeat(2, 1fr);
+    width: 90%;
+  }
+
+  @media (max-width: 850px) {
+    grid-template-columns: repeat(1, 1fr);
+    width: 75%;
+  }
+
+  @media (max-width: 630px) {
+    grid-template-columns: repeat(1, 1fr);
+    width: 70%;
   }
 `;
 
-export { ArtistContainer, ArtistInfo, Albums };
+const AlbumInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 3rem;
+
+  h3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin: 0;
+    align-self: flex-start;
+  }
+
+  p:first-child {
+    margin: 1rem 0;
+    align-self: center;
+  }
+`;
+
+export { ArtistContainer, ArtistInfo, Albums, AlbumInfo };

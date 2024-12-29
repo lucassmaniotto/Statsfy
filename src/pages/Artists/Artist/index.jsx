@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiClient from "../../../services/spotify/login";
 
-import { Albums, ArtistContainer, ArtistInfo } from "./styles";
+import { AlbumInfo, Albums, ArtistContainer, ArtistInfo } from "./styles";
+import { Button } from "../../../components/Button";
 import { Section } from "../../../components/GlobalStyles/shared";
 import { formatFollowers } from "../../../components/util/formatFollowers";
 
@@ -30,12 +31,26 @@ export const Artist = () => {
 
   const fetchAlbums = (artistId) => {
     apiClient
-      .get(`/artists/${artistId}/albums?include_groups=album%2Csingle&limit=50`)
+      .get(`/artists/${artistId}/albums?include_groups=album%2Csingle&limit=48`)
       .then((response) => {
         setAlbums(response.data.items);
         setTotalAlbums(response.data.total);
         console.log(response.data);
       });
+  };
+
+  const loadMoreAlbums = () => {
+    apiClient
+      .get(
+        `/artists/${artistId}/albums?include_groups=album%2Csingle&limit=48&offset=${albums.length}`
+      )
+      .then((response) => {
+        setAlbums([...albums, ...response.data.items]);
+      });
+  };
+
+  const formatAlbumName = (name) => {
+    return name.length > 30 ? name.slice(0, 30) + "..." : name;
   };
 
   useEffect(() => {
@@ -60,15 +75,35 @@ export const Artist = () => {
           </ArtistInfo>
         </div>
       </ArtistContainer>
-      <h2>Albums/Singles</h2>
-      <Albums>
-        {albums.map((album) => (
-          <div key={album.id}>
-            <img src={album.images[0].url} alt={album.name} />
-            <p>{album.name}</p>
-          </div>
-        ))}
-      </Albums>
+      <Section>
+        <h2>Albums/Singles</h2>
+        <Albums>
+          {albums.map((album) => (
+            <div>
+              <a
+                href={album.external_urls.spotify}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div key={album.id}>
+                  <img src={album.images[0].url} alt={album.name} />
+                </div>
+              </a>
+              <AlbumInfo>
+                <h3>{album.name}</h3>
+                <p>
+                  artists:{" "}
+                  {album.artists.map((artist) => artist.name).join(", ")}
+                </p>
+                <p>type: {album.album_type}</p>
+                <p>released: {album.release_date}</p>
+                <p>total tracks: {album.total_tracks}</p>
+              </AlbumInfo>
+            </div>
+          ))}
+        </Albums>
+        <Button onClick={loadMoreAlbums}>Load More</Button>
+      </Section>
     </Section>
   );
 };
